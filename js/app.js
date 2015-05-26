@@ -2,9 +2,31 @@
 
 var app = angular.module('app', ['lheader']);
 
-app.controller('Ctrl', ['$scope', '$timeout', function($scope, $timeout) {
+app.controller('Ctrl', ['$scope', '$timeout', '$http', function($scope, $timeout, $http) {
     // Create sample data
-    $scope.data = _.range(50);
+    $scope.data = [];
+    var allData = [];
+
+    $http.get('data/data.csv').then(function(response) {
+        var csvArray = CSVToArray(response.data);
+        var csvHeader = _.first(csvArray.splice(0, 1));
+        csvHeader = _.invert(csvHeader);
+
+        for (var i = 0; i < csvArray.length; ++i) {
+            allData.push({
+                id : _.padLeft(csvArray[i][csvHeader.id], 4, '0'),
+                credit : csvArray[i][csvHeader['crédit']],
+                legende : csvArray[i][csvHeader['légende']],
+            });
+        }
+
+        allData = _.shuffle(allData);
+
+        $scope.data = allData.splice(0, 100);
+
+        msnry.destroy();
+        msnry = callMasonry();
+    });
 
     // Utility function returning a new Masonry instance
     var callMasonry = function() {
@@ -26,7 +48,12 @@ app.controller('Ctrl', ['$scope', '$timeout', function($scope, $timeout) {
                     element = element.parents('.item'); // the right element
                 }
 
-                element.toggleClass('expanded');
+                var hasClass = element.hasClass('expanded');
+
+                $('.item.expanded').removeClass('expanded');
+                if (!hasClass) {
+                    element.addClass('expanded');
+                }
 
                 $scope.$apply(function() { // Make sure we're in an applied scope
                     msnry.layout(); // Re-layout
@@ -35,7 +62,15 @@ app.controller('Ctrl', ['$scope', '$timeout', function($scope, $timeout) {
 
             msnry.destroy();
             msnry = callMasonry();
-        }, 10); // Must fire this in a timeout (or the DOM will not be ready)
-
+        }, 400); // Must fire this in a timeout (or the DOM will not be ready)
     }, true);
+
+    var $win = $(window);
+    $(document).on('scroll', _.debounce(function() {
+        if ($win.height() + $win.scrollTop() === $(document).height()) {
+            $scope.$apply(function() {
+                $scope.data = $scope.data.concat(allData.splice(0, 100));
+            });
+        }
+    }));
 }]);

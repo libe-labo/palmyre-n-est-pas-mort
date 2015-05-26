@@ -41,11 +41,11 @@
                     <div class="item" ng-repeat="item in data">
                         <div class="item-content">
                             <div class="overlay">
-                                <p>Lorem ipsum Cupidatat aliquip sit culpa.</p>
+                                <p>{{ item.legende }}</p>
                                 <br />
-                                <p>John Doe</p>
+                                <p>{{ item.credit }}</p>
                             </div>
-                            <img src="photos/pantheon.jpg" />
+                            <img ng-src="photos/palmyre_{{ item.id }}.jpg" />
                         </div>
                     </div>
                 </div>
