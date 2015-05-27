@@ -30,6 +30,16 @@ section.content {
     margin-top: 15px;
 }
 
+.modal p a {
+    color: #000;
+    text-decoration: none;
+}
+
+.modal p.link {
+    font-family: "Trade Gothic Bold Cond";
+    color: #C42121;
+}
+
 .modal .modal__close {
     position: absolute;
     top: 10px;
