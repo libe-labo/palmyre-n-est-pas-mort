@@ -34,6 +34,7 @@
     "_": true,
     "CSVToArray": true,
     "Masonry": true,
-    "Packery": true
+    "Packery": true,
+    "imagesLoaded": true
   }
 }

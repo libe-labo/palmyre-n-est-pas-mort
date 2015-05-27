@@ -17,7 +17,7 @@ section.content {
     left: 50px;
     background: rgba(255, 255, 255, .85);
     padding: 20px;
-    z-index: 1000;
+    z-index: 200;
     max-width: 40%;
 }
 
@@ -108,7 +108,32 @@ p {
     line-height: 1.2em;
 }
 
+em {
+    font-style: italic;
+}
+
 @media (max-width: 960px) {
+    .modal {
+        position: relative;
+        top: 0;
+        left: 0;
+        background: rgba(255, 255, 255, 1);
+        padding: 20px;
+        width: 100%;
+        max-width: 100%;
+        -webkit-box-sizing: border-box;
+           -moz-box-sizing: border-box;
+                box-sizing: border-box;
+    }
+
+    .modal h1 {
+        font-size: 2em;
+    }
+
+    .modal .modal__close {
+        display: none;
+    }
+
     .item {
         width: 20%;
     }

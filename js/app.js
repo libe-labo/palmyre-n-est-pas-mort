@@ -69,7 +69,11 @@ app.controller('Ctrl', ['$scope', '$timeout', '$http', function($scope, $timeout
 
     var $win = $(window);
     $(document).on('scroll', _.debounce(function() {
-        var scrollTop = $win.scrollTop()
+        if (allData.length <= 0) {
+            $(document).off('scroll');
+            return;
+        }
+        var scrollTop = $win.scrollTop();
         if ($win.height() + scrollTop === $(document).height()) {
             $scope.$apply(function() {
                 $scope.data = $scope.data.concat(allData.splice(0, 100));
