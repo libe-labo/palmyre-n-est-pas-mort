@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('app', ['lheader']);
+var app = angular.module('app', ['lheader', 'imagesLoaded']);
 
 app.controller('Ctrl', ['$scope', '$timeout', '$http', '$sce', function($scope, $timeout, $http, $sce) {
     // Create sample data
@@ -36,6 +36,10 @@ app.controller('Ctrl', ['$scope', '$timeout', '$http', '$sce', function($scope, 
         });
     };
 
+    $scope.$on('PROGRESS', function() {
+        msnry.layout();
+    });
+
     var msnry = callMasonry();
 
     // Update everything when $scope.data.length changes
@@ -56,9 +60,7 @@ app.controller('Ctrl', ['$scope', '$timeout', '$http', '$sce', function($scope, 
                 }
 
                 $scope.$apply(function() { // Make sure we're in an applied scope
-                    imagesLoaded($('.masonry')[0], function() {
-                        msnry.layout(); // Re-layout
-                    });
+                    msnry.layout(); // Re-layout
                 });
             });
 
