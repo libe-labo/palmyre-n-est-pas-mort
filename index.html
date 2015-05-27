@@ -48,7 +48,7 @@
                     <div class="item" ng-repeat="item in data">
                         <div class="item-content">
                             <div class="overlay">
-                                <p>{{ item.legende }}</p>
+                                <p ng-bind-html="item.legend"></p>
                                 <br />
                                 <p>{{ item.credit }}</p>
                             </div>

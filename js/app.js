@@ -2,7 +2,7 @@
 
 var app = angular.module('app', ['lheader']);
 
-app.controller('Ctrl', ['$scope', '$timeout', '$http', function($scope, $timeout, $http) {
+app.controller('Ctrl', ['$scope', '$timeout', '$http', '$sce', function($scope, $timeout, $http, $sce) {
     // Create sample data
     $scope.data = [];
     var allData = [];
@@ -16,7 +16,7 @@ app.controller('Ctrl', ['$scope', '$timeout', '$http', function($scope, $timeout
             allData.push({
                 id : _.padLeft(csvArray[i][csvHeader.id], 4, '0'),
                 credit : csvArray[i][csvHeader['crédit']],
-                legende : csvArray[i][csvHeader['légende']],
+                legend : $sce.trustAsHtml(csvArray[i][csvHeader['légende']]),
             });
         }
 
